@@ -1,0 +1,78 @@
+1.) Bloc cu structură de control IF:
+
+DECLARE
+    v_numar NUMBER := 10;
+BEGIN
+    IF v_numar > 5 THEN
+        DBMS_OUTPUT.PUT_LINE('Numarul este mai mare decat 5');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Numarul este mai mic sau egal cu 5');
+    END IF;
+END;
+/
+
+
+2.)Bloc cu structură de control LOOP:
+
+DECLARE
+    v_count NUMBER := 1;
+BEGIN
+    LOOP
+        EXIT WHEN v_count > 5;
+        DBMS_OUTPUT.PUT_LINE('Contor: ' || v_count);
+        v_count := v_count + 1;
+    END LOOP;
+END;
+/
+
+3.)Cursor implicit pentru a itera printr-un set de date:
+
+DECLARE
+    CURSOR c_angajati IS SELECT nume, salariu FROM angajati;
+    v_nume angajati.nume%TYPE;
+    v_salariu angajati.salariu%TYPE;
+BEGIN
+    OPEN c_angajati;
+    LOOP
+        FETCH c_angajati INTO v_nume, v_salariu;
+        EXIT WHEN c_angajati%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Angajat: ' || v_nume || ', Salariu: ' || v_salariu);
+    END LOOP;
+    CLOSE c_angajati;
+END;
+/
+
+4.)Cursor explicit pentru a itera printr-un set de date:
+
+DECLARE
+    CURSOR c_clienti IS SELECT nume, adresa FROM clienti;
+    v_nume clienti.nume%TYPE;
+    v_adresa clienti.adresa%TYPE;
+BEGIN
+    OPEN c_clienti;
+    FETCH c_clienti INTO v_nume, v_adresa;
+    WHILE c_clienti%FOUND LOOP
+        DBMS_OUTPUT.PUT_LINE('Client: ' || v_nume || ', Adresa: ' || v_adresa);
+        FETCH c_clienti INTO v_nume, v_adresa;
+    END LOOP;
+    CLOSE c_clienti;
+END;
+/
+
+5.)Bloc cu structură de control CASE:
+
+DECLARE
+    v_ziua_saptamanii VARCHAR2(10) := 'Luni';
+BEGIN
+    CASE v_ziua_saptamanii
+        WHEN 'Luni' THEN
+            DBMS_OUTPUT.PUT_LINE('Prima zi a săptămânii');
+        WHEN 'Marti' THEN
+            DBMS_OUTPUT.PUT_LINE('A doua zi a săptămânii');
+        WHEN 'Miercuri' THEN
+            DBMS_OUTPUT.PUT_LINE('A treia zi a săptămânii');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Ziua nu este definită');
+    END CASE;
+END;
+/

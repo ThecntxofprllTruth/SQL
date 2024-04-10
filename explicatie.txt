@@ -1,0 +1,19 @@
+--CREATE OR REPLACE FUNCTION Nume_complet (...): Creează o funcție PL/SQL numită Nume_complet sau o suprascrie dacă există deja.
+
+p_angajat_id IN NUMBER: Definim parametrul funcției, care este ID-ul angajatului de tip număr.
+
+RETURN VARCHAR2: Specifică tipul de date pe care funcția îl va returna, în acest caz, un șir de caractere.
+
+IS: Începe partea declarativă a funcției.
+
+v_nume_angajat VARCHAR2(100);: Declaram o variabilă locală pentru a stoca numele complet al angajatului.
+
+BEGIN: Începe partea executabilă a funcției.
+
+SELECT nume || ' ' || prenume INTO v_nume_angajat FROM angajati WHERE angajat_id = p_angajat_id;: Selectăm numele și prenumele angajatului dintr-un tabel fictiv angajati bazat pe ID-ul angajatului dat ca parametru și stocăm rezultatul în variabila v_nume_angajat.
+
+RETURN v_nume_angajat;: Returnăm numele complet al angajatului.
+
+EXCEPTION WHEN NO_DATA_FOUND THEN ...: Capturăm excepția NO_DATA_FOUND în cazul în care nu există nicio înregistrare pentru ID-ul angajatului dat, și returnăm un mesaj corespunzător.
+
+Pentru a apela această funcție, putem folosi o instrucțiune SELECT sau putem utiliza această funcție într-o altă instrucțiune PL/SQL, precum un bloc BEGIN...END.
